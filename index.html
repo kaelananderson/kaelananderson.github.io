@@ -146,13 +146,17 @@
               </h5>
               <p>
                 The Uno Card Game Simulator allows up to four players to play Uno through a command-line interface. Here's what it does:
-
-                - Player Setup: Prompts players to enter their names and the number of players (1-4).
-                - Card Dealing: Deals seven cards to each player at the start of the game.
-                - Gameplay: Players take turns playing cards from their hand or drawing cards if they can't play. The game follows standard Uno rules, including special action cards (Skip, Reverse, Draw 2) and wild cards (Wild, Wild Draw 4).
-                - Wild Card Handling: When a Wild card is played, players can select the color to continue the game.
-                - Winning: The game ends when a player has no cards left, and the winner's name is displayed.
               </p>
+
+              <ul>
+                <li><strong>Player Setup:</strong> Prompts players to enter their names and the number of players (1-4).</li>
+                <li><strong>Card Dealing:</strong> Deals seven cards to each player at the start of the game.</li>
+                <li><strong>Gameplay:</strong> Players take turns playing cards from their hand or drawing cards if they can't play. The game follows standard Uno rules, including special action cards (Skip, Reverse, Draw 2) and wild cards (Wild, Wild Draw 4).</li>
+                <li><strong>Wild Card Handling:</strong> When a Wild card is played, players can select the color to continue the game.</li>
+                <li><strong>Winning:</strong> The game ends when a player has no cards left, and the winner's name is displayed.</li>
+              </ul>
+
+
               <h5>
               Project design
               </h5>
@@ -160,23 +164,29 @@
                 The design of the Uno Card Game Simulator was carefully thought out to ensure it was easy to use and extend. The project was developed using Java, a popular and versatile programming language. Java was chosen because of its strong object-oriented features, which are well-suited for simulating card games.
 
                 The design decisions include:
-
-                - Object-Oriented Design: Each component of the game (e.g., cards, players, deck) is represented as a class, making the code modular and easy to maintain.
-                - Command-Line Interface: The game runs in a command-line interface, making it simple to interact with.
-                - Exception Handling: The game includes robust error handling, such as prompting the user to enter a valid color when a Wild card is played.
               </p>
+              <ul>
+                <li><strong>Object-Oriented Design:</strong> Each component of the game (e.g., cards, players, deck) is represented as a class, making the code modular and easy to maintain.</li>
+                <li><strong>Command-Line Interface:</strong> The game runs in a command-line interface, making it simple to interact with.</li>
+                <li><strong>Exception Handling:</strong> The game includes robust error handling, such as prompting the user to enter a valid color when a Wild card is played.</li>
+              </ul>
+
               <h5>
               Implementation
               </h5>
               <p>
                 During the implementation phase, I was responsible for several key components:
+              </p>
+              <ul>
+                <li><strong>Card Classes:</strong> Implemented the classes for different types of cards (NumberCard, ActionCard, WildCard).</li>
+                <li><strong>Game Logic:</strong> Developed the main game logic in the GameManagement class, including handling player turns and special card actions.</li>
+                <li><strong>User Interface:</strong> Created the command-line interface that interacts with players, including prompting for player actions and displaying game status.</li>
+              </ul>
 
-                - Card Classes: Implemented the classes for different types of cards (NumberCard, ActionCard, WildCard).
-                - Game Logic: Developed the main game logic in the GameManagement class, including handling player turns and special card actions.
-                - User Interface: Created the command-line interface that interacts with players, including prompting for player actions and displaying game status.
-
+              <p>
                 Throughout the development process, I used test-driven development (TDD) to ensure the code was reliable and free of bugs. This involved writing unit tests for each class and method before implementing the functionality. I also practiced agile development principles, iterating on the design and implementation based on feedback and testing results.
               </p>
+
               <p>You can view the code and contribute to the project on GitHub:
                 <a href="https://github.com/usd-cs/comp305-final-project-sp24-s01s02-kae-and-key" target="_blank">GitHub Repository</a>
               </p>
