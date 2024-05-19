@@ -145,21 +145,41 @@
               Functional requirements/what the project does
               </h5>
               <p>
-                placeholder
+                The Uno Card Game Simulator allows up to four players to play Uno through a command-line interface. Here's what it does:
+
+                - Player Setup: Prompts players to enter their names and the number of players (1-4).
+                - Card Dealing: Deals seven cards to each player at the start of the game.
+                - Gameplay: Players take turns playing cards from their hand or drawing cards if they can't play. The game follows standard Uno rules, including special action cards (Skip, Reverse, Draw 2) and wild cards (Wild, Wild Draw 4).
+                - Wild Card Handling: When a Wild card is played, players can select the color to continue the game.
+                - Winning: The game ends when a player has no cards left, and the winner's name is displayed.
               </p>
               <h5>
               Project design
               </h5>
               <p>
-                placeholder
+                The design of the Uno Card Game Simulator was carefully thought out to ensure it was easy to use and extend. The project was developed using Java, a popular and versatile programming language. Java was chosen because of its strong object-oriented features, which are well-suited for simulating card games.
+
+                The design decisions include:
+
+                - Object-Oriented Design: Each component of the game (e.g., cards, players, deck) is represented as a class, making the code modular and easy to maintain.
+                - Command-Line Interface: The game runs in a command-line interface, making it simple to interact with.
+                - Exception Handling: The game includes robust error handling, such as prompting the user to enter a valid color when a Wild card is played.
               </p>
               <h5>
               Implementation
               </h5>
               <p>
-                placeholder
-              </p>
+                During the implementation phase, I was responsible for several key components:
 
+                - Card Classes: Implemented the classes for different types of cards (NumberCard, ActionCard, WildCard).
+                - Game Logic: Developed the main game logic in the GameManagement class, including handling player turns and special card actions.
+                - User Interface: Created the command-line interface that interacts with players, including prompting for player actions and displaying game status.
+
+                Throughout the development process, I used test-driven development (TDD) to ensure the code was reliable and free of bugs. This involved writing unit tests for each class and method before implementing the functionality. I also practiced agile development principles, iterating on the design and implementation based on feedback and testing results.
+              </p>
+              <p>You can view the code and contribute to the project on GitHub:
+                <a href="https://github.com/username/uno-card-game-simulator" target="_blank">GitHub Repository</a>
+              </p>
 
             </div>
 
