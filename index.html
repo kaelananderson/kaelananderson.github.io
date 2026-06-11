@@ -1,280 +1,56 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kaelan Anderson</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <title>Kaelan Anderson</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <header>
+    <a href="index.html" class="site-name">Kaelan Anderson</a>
+    <!-- <p class="site-tagline">Data science, writing, Portland.</p> -->
+  </header>
 
+  <nav>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="code.html">Code</a></li>
+      <li><a href="mailto:kaelananderson@sandiego.edu">Contact</a></li>
+    </ul>
+  </nav>
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <div class="home-grid">
+    <div>
+      <img src="aang.jpg" alt="Kaelan Anderson" class="home-photo">
+    </div>
+    <div class="home-text">
+      <p>
+      Hi! I am someone who is curious about the questions that live at the intersection of data and people. Healthcare quality and equity, the social determinants of health, racial inequity, the sociology of homelessness and houselessness, sustainability, public health. I like intersectional frameworks, and I am always looking for the more complete picture of why things are the way they are.
+      </p>
+      <p>
+      Right now I am putting that curiosity to work in two places. At Kaiser Permanente, I build dashboards and reporting tools for the Maui Health System, and that work has taught me a lot about how good data in the right hands at the right time actually changes the care people receive. I also do research at San Diego State University's Geospatial Human Dynamics Lab, where I use spatial statistics to find significant space-time clusters in 311 calls about homeless encampments, trying to understand where and when these issues concentrate and what that might tell us. I have also worked on projects spanning comparative machine learning models for high-dimensional data and basketball performance analytics.
+      </p>
+      <p>
+      I am energized by environments that value creativity, technical rigor, and a commitment to social justice. I am inspired by work that helps organizations understand their data in ways that lead to better outcomes for the people they serve.
+      </p>
+      <p>
+      Outside of work and research, I coach youth basketball, write poetry, and if you can not find me at my computer or in the gym, I am probably watching the sunset.
+      </p>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-    <link rel="stylesheet" href="css/jquery.fancybox.min.css">
-
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/style.css">
-
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
-
-  <div id="overlayer"></div>
-  <div class="loader">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
+      <div class="home-links">
+        <a href="mailto:kaelananderson@sandiego.edu">kaelananderson@sandiego.edu</a>
+        <a href="https://www.linkedin.com/in/kaelan-anderson-65124920a/" target="_blank">LinkedIn</a>
+        <a href="https://docs.google.com/document/d/192AzUiTO9TXgvxhG2GLTBsubhQxeS1_2C6TL3wHDbUU/edit?usp=sharing" target="_blank">Resume</a>
+        <a href="https://github.com/usd-cs" target="_blank">GitHub</a>
+      </div>
     </div>
   </div>
 
+  <footer>© <script>document.write(new Date().getFullYear())</script> Kaelan Anderson</footer>
 
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-
-
-    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
-
-      <div class="container">
-        <div class="row align-items-center">
-
-          <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="#" class="h2 mb-0">Kaelan Anderson</a></h1>
-          </div>
-
-          <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="#about-section" class="nav-link">About</a></li>
-                <li><a href="#projects-section" class="nav-link">Projects</a></li>
-                <li><a href="#contact-section" class="nav-link">Contact</a></li>
-              </ul>
-            </nav>
-          </div>
-
-
-          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3"></span></a></div>
-
-        </div>
-      </div>
-
-    </header>
-
-
-
-
-    <div class="site-section cta-big-image border-bottom" id="about-section">
-      <div class="container" style="padding-top: 30px">
-        <div class="row">
-          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
-
-            <img src="aang.jpg" alt="Image of you of something fun" class="img-fluid">
-
-          </div>
-          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            <div class="mb-4">
-              <p>
-                I was born and raised in Portland, Oregon and am very fond of my hometown. Growing up, I spent a lot of my time hanging out with my older brother,
-                playing basketball and video games, and exploring the city. 
-              </p>
-              <p>
-                I am currently a student at the University of San Diego studying computer science with a concentration in Data Science and Artificial Intelligence. 
-                I have enjoyed diving further into my concentration and have aspirations to pursue data science as a career after my graduation in May 2025. Additionally, 
-                I am passionate connecting my studies in computer science to humanities classes I have taken at USD. In my career, I want to be in a space that fosters change
-                with a social justice lens. 
-               </p>
-               <p>
-                In my free time you can find me laying in my hammock, in the basketball gym, watching the sunset, or writing some poetry. 
-               </p>
-
-
-            </div>
-
-            
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-    <section class="site-section border-bottom" id="projects-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-md-8 text-center">
-            <h2 class="section-title mb-3" data-aos="fade-up" data-aos-delay="">Projects</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
-          
-            <img src="uno.avif" alt="Image of your project" class="img-fluid">
-          
-          </div>
-          <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            <div class="mb-4">
-              <h3>Uno</h3>
-              <br>
-              <h5>
-               Motivation of the project
-              </h5>
-              <p>
-                Uno is a game that has challenged friendships through its competitive nature for decades. It also offers a fun project to build while implementing
-                the 4-pillards of object oriented programming! The excitement and challenge of building an Uno game with a workable interface is what inspired us to do so. 
-              </p>
-              <h5>
-              Functional requirements/what the project does
-              </h5>
-              <p>
-                The Uno Card Game Simulator allows up to four players to play Uno through a command-line interface. Here's what it does:
-              </p>
-
-              <ul>
-                <li><strong>Player Setup:</strong> Prompts players to enter their names and the number of players (1-4).</li>
-                <li><strong>Card Dealing:</strong> Deals seven cards to each player at the start of the game.</li>
-                <li><strong>Gameplay:</strong> Players take turns playing cards from their hand or drawing cards if they can't play. The game follows standard Uno rules, including special action cards (Skip, Reverse, Draw 2) and wild cards (Wild, Wild Draw 4).</li>
-                <li><strong>Wild Card Handling:</strong> When a Wild card is played, players can select the color to continue the game.</li>
-                <li><strong>Winning:</strong> The game ends when a player has no cards left, and the winner's name is displayed.</li>
-              </ul>
-
-
-              <h5>
-              Project design
-              </h5>
-              <p>
-                The design of the Uno Card Game Simulator was carefully thought out to ensure it was easy to use and extend. The project was developed using Java, a popular and versatile programming language. Java was chosen because of its strong object-oriented features, which are well-suited for simulating card games.
-
-                The design decisions include:
-              </p>
-              <ul>
-                <li><strong>Object-Oriented Design:</strong> Each component of the game (cards, players, deck) is represented as a class, making the code modular and easy to maintain.</li>
-                <li><strong>Command-Line Interface:</strong> The game runs in a command-line interface, making it simple to interact with and easy to view.</li>
-                <li><strong>Exception Handling:</strong> The game includes robust error handling, such as prompting the user to enter a valid color when a Wild card is played. This ensures that if there is an error on the user-end, the game will still continue.</li>
-              </ul>
-
-              <h5>
-              Implementation
-              </h5>
-              <p>
-                During the implementation phase, I was responsible for several key components:
-              </p>
-              <ul>
-                <li><strong>Card Classes:</strong> Implemented the classes for different types of cards (NumberCard, ActionCard, WildCard).</li>
-                <li><strong>Game Logic:</strong> Developed the main game logic in the GameManagement class, including handling player turns and special card actions.</li>
-                <li><strong>User Interface:</strong> Created the command-line interface that interacts with players, including prompting for player actions and displaying game status.</li>
-              </ul>
-
-              <p>
-                Throughout the development process, I used test-driven development (TDD) to ensure the code was reliable and free of bugs. This involved writing unit tests for each class and method before implementing the functionality.
-              </p>
-
-              <p>You can view the code and contribute to the project on GitHub:
-                <a href="https://github.com/usd-cs/comp305-final-project-sp24-s01s02-kae-and-key" target="_blank">GitHub Repository</a>
-              </p>
-
-            </div>
-
-            
-
-          </div>
-        </div>
-      </div>
-      
-
-    </section>
-
-
-    <section class="site-section" id="contact-section" data-aos="fade">
-      <div class="container">
-        <div class="row mb-5">
-          <div class="col-12 text-center">
-            <h2 class="section-title mb-3">Contact Me</h2>
-          </div>
-        </div>
-        <div class="row mb-5 text-center">
-
-
-
-          
-          
-          <div class="col-md-12 text-center">
-            <p class="mb-0">
-              <span class="icon-mail_outline d-block h4 text-primary"></span>
-              <span>kaelananderson@sandiego.edu</span>
-            </p>
-          </div>
-          
-          <div class="col-md-12 text-center">
-            <p class="mb-0">
-              <span class="icon-graduation-cap d-block h4 text-primary"></span>
-              <a href="https://docs.google.com/document/d/192AzUiTO9TXgvxhG2GLTBsubhQxeS1_2C6TL3wHDbUU/edit?usp=sharing">Resume</a>
-            </p>
-          </div>
-
-          <div class="col-md-12 text-center">
-            <p class="mb-0">
-              <span class="icon-linkedin d-block h4 text-primary"></span>
-              <a href="https://www.linkedin.com/in/kaelan-anderson-65124920a/">LinkedIn</a>
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <footer class="site-footer">
-      <div class="container">
-
-          <div class="col-md-12 text-center">
-            <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This website builds on a template by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-
-          </div>
-
-
-      </div>
-    </footer>
-
-  </div> <!-- .site-wrap -->
-
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-  <script src="js/isotope.pkgd.min.js"></script>
-  <script src="js/collapsable.js"></script>
-
-
-  <script src="js/main.js"></script>
-
-  </body>
+</body>
 </html>

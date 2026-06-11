@@ -1,0 +1,186 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1a1a1a;
+  --muted: #999;
+  --border: #e0e0e0;
+  --sans: 'Helvetica Neue', Arial, sans-serif;
+  --serif: Georgia, serif;
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: #fff;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* HEADER — same on every page */
+header {
+  text-align: center;
+  padding: 4rem 0 2.5rem;
+}
+
+.site-name {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.site-tagline {
+  font-family: var(--serif);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* NAV */
+nav {
+  text-align: center;
+  padding: 2rem 0 3.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3.5rem;
+}
+
+.nav-links {
+  display: inline-flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: #7ab8d4; }  /* light blue like neilgong.com */
+
+/* CONTENT */
+h1 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: normal;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: normal;
+  font-family: var(--serif);
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--ink);
+  line-height: 1.75;
+}
+
+a { color: var(--ink); }
+a:hover { text-decoration: underline; }
+
+/* HOME */
+.home-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.home-photo {
+  width: 100%;
+  display: block;
+}
+
+.home-links {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.home-links a {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.home-links a:hover { color: var(--ink); }
+
+/* ENTRIES (code / writing / research pages) */
+.page-intro {
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  max-width: 520px;
+  font-style: italic;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2.5rem 0 0;
+}
+
+.entry {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.entry:first-of-type { border-top: 1px solid var(--border); }
+
+.entry-meta {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.entry h2 a {
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.entry h2 a:hover { text-decoration: underline; }
+
+.entry p {
+  margin-top: 0.4rem;
+  color: #666;
+  font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 5rem;
+  padding: 2rem 0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .home-grid { grid-template-columns: 1fr; }
+  .home-photo { max-width: 150px; }
+  .nav-links { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+}
