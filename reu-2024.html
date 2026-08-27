@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REU 2024 — Kaelan Anderson</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .reu-section {
+      margin: 2.5rem 0;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .reu-section:last-of-type { border-bottom: none; }
+
+    .reu-section h2 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: normal;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .reu-section p { margin-bottom: 0.75rem; }
+
+    .reu-meta {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .reu-title {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: normal;
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    .embed-frame {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: block;
+    }
+
+    .embed-placeholder {
+      width: 100%;
+      padding: 3rem 2rem;
+      background: #fafafa;
+      border: 1px dashed var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .link-row {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .link-row a {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+    }
+
+    .link-row a:hover { color: var(--ink); border-color: var(--ink); }
+
+    .dataset-list {
+      list-style: none;
+      margin: 0.5rem 0 0;
+    }
+
+    .dataset-list li {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.75;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .dataset-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="site-name">Kaelan Anderson</a>
+  </header>
+
+  <nav>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="code.html">Code</a></li>
+      <li><a href="mailto:kaelananderson@sandiego.edu">Contact</a></li>
+    </ul>
+  </nav>
+
+  <a href="research.html" class="back-link">← Research</a>
+
+  <div class="reu-meta">NSF REU · UC Riverside · Summer 2024</div>
+  <h1 class="reu-title">Interpretable Modeling for High-Dimensional Data:<br>Comparing Lasso Regression and Neural Networks</h1>
+
+  <div class="reu-section">
+    <h2>Overview</h2>
+    <p>
+      This research, conducted at UC Riverside's NSF REU site "Experience the Full Data Science Pipeline
+      through Research and Practice" (Grant No. 2244480), examined when a simple, interpretable model can
+      match or outperform complex deep learning approaches on high-dimensional data — data where features
+      greatly outnumber observations.
+    </p>
+    <p>
+      High-dimensional settings introduce well-known challenges: overfitting, computational burden, and
+      difficulty understanding why a model makes a given prediction. While CNNs and FCNNs excel at capturing
+      nonlinear patterns, their opacity limits use in fields where the decision-making process must be
+      transparent, such as medicine and finance. Lasso regression offers a built-in feature selection
+      mechanism and fully interpretable coefficients. The central question was: <em>how much predictive
+      power do you actually give up for that transparency?</em>
+    </p>
+  </div>
+
+  <div class="reu-section">
+    <h2>Datasets</h2>
+    <ul class="dataset-list">
+      <li><strong>Simulation data</strong> — synthetic dataset designed to evaluate feature selection in a controlled setting where ground truth is known</li>
+      <li><strong>Wave energy farm</strong> — real-world regression task predicting energy output from buoy configurations</li>
+      <li><strong>TCGA stomach cancer</strong> — high-dimensional genomic data for binary classification of disease-specific survival</li>
+      <li><strong>Taiwanese bankruptcy</strong> — financial dataset for predicting company bankruptcy</li>
+    </ul>
+  </div>
+
+  <div class="reu-section">
+    <h2>Key Findings</h2>
+    <p>
+      Lasso regression demonstrated competitive accuracy across all four datasets while requiring far less
+      computation for both training and post-hoc explainability. Neural networks (CNNs and FCNNs) achieved
+      marginal predictive gains in some settings but demanded substantially more resources when explaining
+      predictions via SHAP values. The results support a practical principle: in high-stakes domains, reaching
+      for the interpretable model first is defensible — and often sufficient.
+    </p>
+  </div>
+
+  <div class="reu-section">
+    <h2>Research Poster</h2>
+    <!-- Replace the placeholder below with an <img> or <iframe> once you upload the poster file.
+         For an image:  <img src="images/reu-2024-poster.png" alt="REU 2024 research poster" class="embed-frame">
+         For a PDF:     <iframe src="images/reu-2024-poster.pdf" class="embed-frame" height="700" title="REU 2024 research poster"></iframe> -->
+    <div class="embed-placeholder">Poster coming soon — upload your poster file to images/ and replace this block.</div>
+  </div>
+
+  <div class="reu-section">
+    <h2>Final Project Writeup</h2>
+    <!-- Replace the placeholder below once you upload the writeup PDF.
+         <iframe src="images/reu-2024-writeup.pdf" class="embed-frame" height="800" title="REU 2024 final writeup"></iframe> -->
+    <div class="embed-placeholder">Writeup coming soon — upload your PDF to images/ and replace this block.</div>
+  </div>
+
+  <div class="reu-section">
+    <h2>Links</h2>
+    <div class="link-row">
+      <a href="https://github.com/kaelananderson/REU-2024" target="_blank" rel="noopener">GitHub Repository ↗</a>
+    </div>
+  </div>
+
+  <footer>© <script>document.write(new Date().getFullYear())</script> Kaelan Anderson</footer>
+
+</body>
+</html>
