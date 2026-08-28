@@ -176,6 +176,21 @@
     }
 
     .back-link:hover { color: var(--ink); }
+
+    /* ── Step label ── */
+    .step-label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #2f2f2f;
+      padding: 0.2em 0.55em;
+      border-radius: 2px;
+      margin-bottom: 0.4rem;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -194,7 +209,7 @@
     </ul>
   </nav>
 
-  <a href="../code.html" class="back-link">&larr; Code</a>
+  <a href="../code.html" class="back-link">← Code</a>
 
   <h1 class="tutorial-title">Preparing San Diego 311 Encampment Data for SaTScan</h1>
   <p class="tutorial-meta">Tutorial &middot; Python &middot; 2024</p>
@@ -212,9 +227,9 @@
         The goal is to take a raw CSV of encampment reports and produce the two input files that
         <a href="https://www.satscan.org/" target="_blank">SaTScan</a> requires: a <strong>case file</strong>
         (.cas) recording when and where reports occurred, and a <strong>geography file</strong> (.geo)
-        mapping each location ID to its coordinates. Along the way, we look at the data closely
-        enough to make reasonable modeling decisions &mdash; and understand what the results can
-        and cannot tell us.
+        mapping each location ID to its coordinates. Along the way, we will look at the data carefully
+        enough to make defensible modeling decisions — and understand what we can and cannot conclude
+        from the results.
       </p>
     </div>
 
@@ -224,7 +239,7 @@
       <p>
         Download the dataset from the
         <a href="https://hhubsandiego-ucsdonline.hub.arcgis.com/datasets/9d27b009ddec489b982481e38f7c9c80_0/explore" target="_blank">311 Encampment Reports page</a>.
-        Click <strong>Download</strong> and choose the CSV option. I use the 2024 calendar year &mdash;
+        Click <strong>Download</strong> and choose the CSV option. I use the 2024 calendar year —
         a full year matters for building a clean temporal baseline. If you pull a multi-year file,
         everything below still applies, but pay attention to the study period at the end.
       </p>
@@ -243,9 +258,9 @@ df.head()</div>
 
     <div class="nb-md">
       <p>
-        Each row is one 311 report &mdash; not one encampment, and not one person. That distinction
-        matters quite a bit here, and we will come back to it. For cluster detection, only three
-        things matter from those 26 columns:
+        Each row is one 311 report — not one encampment, and not one person. That distinction matters
+        more than almost anything else here, and we will come back to it. For cluster detection, only
+        three things matter from those 26 columns:
       </p>
       <table>
         <tr><th>What SaTScan needs</th><th>Column in this dataset</th></tr>
@@ -254,32 +269,48 @@ df.head()</div>
         <tr><td><strong>How many</strong> at that place and time</td><td>computed by counting</td></tr>
       </table>
       <p>
-        The other columns &mdash; <code>council_district</code>, <code>status</code>, <code>case_age_days</code>
-        &mdash; are useful for exploration and for interpreting results afterward, but they are not model inputs.
-        Before setting them aside, we will use some of them.
+        The other columns — <code>council_district</code>, <code>status</code>, <code>case_age_days</code>
+        — are useful for exploration and for interpreting results afterward, but they are not model inputs.
+        Before discarding them, we will use them.
       </p>
     </div>
 
     <div class="nb-code">df.dtypes</div>
 
-    <div class="nb-output">service_request_id      int64
-date_requested         object
-status                 object
-service_name           object
-comm_plan_name         object
-council_district       object
-lat                   float64
-lng                   float64
-case_age_days         float64
-...
+    <div class="nb-output">x                            float64
+y                            float64
+service_request_id             int64
+service_request_parent_id    float64
+sap_notification_number      float64
+date_requested                object
+case_age_days                  int64
+case_record_type              object
+service_name                  object
+service_name_detail          float64
+date_closed                   object
+status                        object
+lat                          float64
+lng                          float64
+street_address                object
+zipcode                      float64
+council_district             float64
+comm_plan_code               float64
+comm_plan_name                object
+park_name                     object
+case_origin                   object
+referred                      object
+iamfloc                       object
+floc                          object
+public_description            object
+ObjectId                       int64
 dtype: object</div>
 
     <h2>Step 2 &mdash; Explore the data</h2>
 
     <div class="nb-md">
       <p>
-        Before writing any modeling code, it helps to get a feel for what's actually in the
-        dataset &mdash; what the columns contain, when reports came in, and where they're concentrated.
+        Before writing any modeling code, it's useful to get a feel for what's actually in the
+        dataset — what the columns contain, when reports came in, and where they're concentrated.
         Catching data issues early tends to be much easier than tracing them back from unexpected
         results later.
       </p>
@@ -294,15 +325,14 @@ Encampment    59059
 Name: service_name, dtype: int64
 
 status
-Closed      42381
-Referred    14203
-Open         2475
+Closed      53133
+Referred     5926
 Name: status, dtype: int64</div>
 
     <div class="nb-md">
       <p>
         Every row is an <code>Encampment</code> report, so this particular export doesn't need
-        any type-based filtering. We'll still write the filter explicitly below &mdash; if you re-download
+        any type-based filtering. We'll still write the filter explicitly below — if you re-download
         this dataset later and the city has folded in additional service types, the code will catch
         that rather than quietly including rows we didn't intend.
       </p>
@@ -324,22 +354,22 @@ plt.show()</div>
 
     <div class="nb-md">
       <p>
-        Reports range from roughly 60 to 1,570 per week &mdash; a wide swing within a single year.
+        Reports range from roughly 60 to 1,570 per week — a twenty-six-fold swing within a single year.
       </p>
     </div>
 
     <div class="nb-callout">
       <p>
-        It's worth noting that this doesn't necessarily mean the number of encampments swung by the
-        same amount. Report volume is also shaped by enforcement activity, media coverage, weather,
-        and outreach campaigns. <strong>What we are measuring is reporting behavior</strong>, which
-        is related to the underlying phenomenon but not the same thing. SaTScan will find clusters
-        in whatever you give it &mdash; if you feed it reports, it finds clusters of <em>reporting</em>.
+        Does that mean the number of encampments swung twenty-six-fold? Almost certainly not.
+        Report volume responds to enforcement pushes, media coverage, weather, and outreach campaigns.
+        <strong>What we are measuring is reporting behavior</strong>, which is related to the underlying
+        phenomenon but is not the same variable. SaTScan will find clusters in whatever you give it —
+        if you feed it reports, it finds clusters of <em>reporting</em>.
       </p>
     </div>
 
     <div class="nb-md">
-      <p>Now let's look at the geographic distribution &mdash; where are reports coming from?</p>
+      <p>Now let's look at the geographic distribution — where are reports coming from?</p>
     </div>
 
     <div class="nb-code"># comm_plan_name has inconsistent casing ('Downtown' vs 'DOWNTOWN').
@@ -356,16 +386,16 @@ plt.show()</div>
 
     <div class="nb-md">
       <p>
-        Downtown accounts for over 20,000 reports &mdash; roughly a third of the city's total. Uptown,
+        Downtown accounts for over 20,000 reports — roughly a third of the city's total. Uptown,
         Mid-City: City Heights, and North Park follow at a distance.
       </p>
       <p>
-        This is worth keeping in mind when we get to the SaTScan results. Downtown will likely
-        show up as a cluster, partly just because it has so many reports overall. What SaTScan is
-        asking is more specific: given how many reports this area typically generates, was there a
-        particular stretch of time where it produced <em>more than expected</em>? That's a different
-        question from having the highest total count, and it's what makes the approach useful beyond
-        what a bar chart can already tell us.
+        This is worth keeping in mind for when we get to the SaTScan results. Downtown will likely
+        show up as a cluster, partly just because it has so many reports. What SaTScan is actually
+        asking is a more specific question: given how many reports this area typically generates,
+        was there a particular stretch of time where it produced <em>more than expected</em>? That's
+        different from simply having the highest total count — and it's what makes the method
+        useful beyond what a bar chart already tells us.
       </p>
     </div>
 
@@ -393,19 +423,18 @@ camp_data = camp_data.drop(columns=["date_requested"])
 camp_data.head()</div>
 
     <div class="nb-output">   service_request_id        lat         lng       date
-0         24-000001  32.715736 -117.156281 2024-01-01
-1         24-000002  32.740512 -117.132094 2024-01-01
-2         24-000003  32.753881 -117.120647 2024-01-02
-3         24-000004  32.718204 -117.163892 2024-01-02
-4         24-000005  32.761003 -117.098452 2024-01-03</div>
+0             4563179  32.716936 -117.154526 2024-01-01
+1             4563180  32.748568 -117.131777 2024-01-01
+2             4563181  32.916662 -117.116820 2024-01-01
+3             4563187  32.713853 -117.158849 2024-01-01
+4             4563192  32.705174 -117.148147 2024-01-01</div>
 
     <div class="nb-md">
       <p>
-        One thing to be aware of: San Diego is 7&ndash;8 hours behind UTC. A report filed at 5 pm local
-        on January 1st arrives as 00:32 UTC on January 2nd, so a small number of reports get assigned
-        to the following day. For day-resolution analysis over a full year this is unlikely to matter,
-        but if you ever move to hourly analysis, converting to <code>America/Los_Angeles</code> first
-        would be worth doing.
+        A subtle point: San Diego is 7–8 hours behind UTC. A report filed at 5 pm local on January 1st
+        lands at 00:32 UTC on January 2nd, so a handful of reports get assigned to the next day. For
+        day-resolution analysis over a full year this is negligible — but if you ever move to hourly
+        analysis, convert to <code>America/Los_Angeles</code> first.
       </p>
     </div>
 
@@ -415,7 +444,7 @@ camp_data.head()</div>
 
 camp_data = camp_data.dropna(subset=["lat", "lng"])
 
-# Guard against (0, 0) 'null island' -- a geocoding failure mode that lands a phantom
+# Guard against (0, 0) 'null island' — a geocoding failure mode that lands a phantom
 # cluster in the Gulf of Guinea rather than producing a visible NaN.
 camp_data = camp_data[(camp_data["lat"] != 0) & (camp_data["lng"] != 0)]
 
@@ -438,7 +467,7 @@ print(camp_data.shape)</div>
     <div class="nb-md">
       <p>
         SaTScan doesn't take a list of raw GPS points. It needs a defined set of <strong>locations</strong>
-        &mdash; each with a stable ID and a single coordinate pair &mdash; plus a separate table counting how many
+        — each with a stable ID and a single coordinate pair — plus a separate table counting how many
         cases occurred at each location on each date. So before we can build those files, we need to
         decide when two reports should be treated as happening at "the same place."
       </p>
@@ -472,13 +501,12 @@ print(camp_data.shape)</div>
     <div class="nb-md">
       <p>
         At 6 decimal places, nearly every report becomes its own unique location. Two calls about
-        the same spot, geocoded a few centimeters apart, get treated as separate places &mdash; which
-        means we're discarding the repeat signals that cluster detection is looking for.
+        the same spot, geocoded a few centimeters apart, get treated as separate places — which
+        means we're throwing away the repeat signals that cluster detection is looking for.
       </p>
       <p>
         At 3 decimal places, 110 meters covers more than a city block in a dense area like Downtown,
-        so we end up merging distinct locations and inflating counts in ways that don't reflect the
-        underlying data.
+        so we end up merging distinct locations and inflating counts in ways that aren't really there.
       </p>
       <p>
         Four decimal places (~11 m, roughly one address width) sits in a reasonable middle: 31,095
@@ -489,9 +517,9 @@ print(camp_data.shape)</div>
 
     <div class="nb-callout">
       <p>
-        One way to check sensitivity to this choice: run the full analysis at <code>COORD_PRECISION = 4</code>
-        and then again at <code>3</code>. Clusters that appear at both precisions are more likely to
-        reflect something real. Clusters that show up at one but not the other are worth flagging as
+        One way to check this: run the full analysis at <code>COORD_PRECISION = 4</code> and then
+        again at <code>3</code>. Clusters that appear at both precisions are more likely to reflect
+        something real. Clusters that show up at one but not the other are worth flagging as
         potentially sensitive to this choice.
       </p>
     </div>
@@ -518,12 +546,12 @@ camp_data.head()</div>
 
     <div class="nb-output">unique locations: 31095
 
-   service_request_id       date   latitude  longitude  location_id
-0         24-000001 2024-01-01  32.7157   -117.1563          843
-1         24-000002 2024-01-01  32.7405   -117.1321         1204
-2         24-000003 2024-01-02  32.7539   -117.1206         1387
-3         24-000004 2024-01-02  32.7182   -117.1639          891
-4         24-000005 2024-01-03  32.7610   -117.0985         1522</div>
+   service_request_id       date  latitude  longitude  location_id
+0             4563179 2024-01-01   32.7169  -117.1545         8111
+1             4563180 2024-01-01   32.7486  -117.1318        15707
+2             4563181 2024-01-01   32.9167  -117.1168        30323
+3             4563187 2024-01-01   32.7139  -117.1588         6383
+4             4563192 2024-01-01   32.7052  -117.1481         2392</div>
 
     <div class="nb-code">counts = camp_data.groupby("location_id").size().rename("n").reset_index()
 geo   = unique_coords.merge(counts, on="location_id").sort_values("n")
@@ -550,7 +578,7 @@ print("most reports at one location:", geo["n"].max())</div>
       <p>
         Even without a basemap, the shape of San Diego comes through in the point density. The
         concentrated cluster in the southwest is Downtown; you can also see corridors running east
-        along the I-8 and El Cajon Blvd. The single busiest location had 211 reports over the year &mdash;
+        along the I-8 and El Cajon Blvd. The single busiest location had 211 reports over the year —
         roughly one every 1.7 days, all year, from the same ~11 m patch. That could be a persistently
         occupied site, or it could be a single frequent caller. It's useful to know which before
         reading too much into any cluster centered there.
@@ -583,11 +611,11 @@ total cases: 59042
 rows with more than one case: 2636
 
    case_id        date  cases  location_id
-0        1  2024/01/01      1          843
-1        2  2024/01/01      1         1204
-2        3  2024/01/01      2          891
-3        4  2024/01/01      1         1522
-4        5  2024/01/02      1          843</div>
+0        1  2024/01/01      1          974
+1        2  2024/01/01      1         2086
+2        3  2024/01/01      1         2261
+3        4  2024/01/01      1         2390
+4        5  2024/01/01      1         2392</div>
 
     <div class="nb-md">
       <p>
@@ -599,7 +627,7 @@ rows with more than one case: 2636
         same tent on the same afternoon, this aggregation records <strong>3 cases</strong> at that
         location that day, not 1. Whether that's the right framing depends on the research question:
         three calls could be three independent signals of community concern, or they could be one
-        tent counted three times. There's no universal right answer &mdash; just make the choice
+        tent counted three times. There's no universal right answer — just make the choice
         deliberately and note it.
       </p>
     </div>
@@ -643,18 +671,18 @@ geo_df.head()</div>
 
     <div class="nb-output">(31095, 3)
 
-   location_id  latitude  longitude
-0            1   32.5639  -117.1271
-1            2   32.5641  -117.1198
-2            3   32.5644  -117.1083
-3            4   32.5648  -117.0941
-4            5   32.5651  -117.0874</div>
+       location_id  latitude  longitude
+55899            1   32.5434  -117.0340
+5186             2   32.5436  -117.0512
+30357            3   32.5436  -117.0510
+15248            4   32.5436  -117.0502
+6628             5   32.5436  -117.0499</div>
 
     <h2>Step 8 &mdash; Validate before handing off</h2>
 
     <div class="nb-md">
       <p>
-        SaTScan's error messages can be sparse, and some failures are silent &mdash; the run completes
+        SaTScan's error messages can be sparse, and some failures are silent — the run completes
         but the results are wrong. Running a few assertions here is much easier than trying to
         trace a problem back from a suspicious cluster. Four things should hold: coordinates map
         one-to-one with location IDs, no ID is duplicated, every location in the case file exists
@@ -706,7 +734,7 @@ Total days:         366</div>
 
     <div class="nb-md">
       <p>
-        366 days &mdash; 2024 was a leap year. Note these dates down; you'll enter them manually in
+        366 days — 2024 was a leap year. Note these dates down; you'll enter them manually in
         SaTScan and it won't warn you if they're wrong.
       </p>
     </div>
@@ -741,26 +769,26 @@ Total days:         366</div>
         <li>Scan For Areas With: <strong>High Rates</strong></li>
       </ul>
       <p>
-        The Space-Time Permutation model works well here because we don't have a denominator &mdash;
+        The Space-Time Permutation model is the right choice here because we have no denominator —
         no population-at-risk data to convert raw counts into rates. Most SaTScan models require one.
-        Space-Time Permutation works around this by using the data as its own control: given how
+        Space-Time Permutation sidesteps the issue by using the data as its own control: given how
         many reports this location produced all year, and given how many reports the whole city produced
         during this time window, is the count in <em>this place during this window</em> surprising?
         No external denominator required.
       </p>
       <p>
         Under <strong>Output</strong>, enable the Google Earth / KML export to see clusters on a map.
-        The default maximum spatial cluster size (50% of the population) is often too permissive &mdash;
+        The default maximum spatial cluster size (50% of the population) is usually too permissive —
         try 10% under the Spatial Window tab. Under Temporal Window, 30 days is a reasonable starting
-        point if you're looking for shorter-term flare-ups rather than season-long shifts.
+        point if you're hunting for acute flare-ups rather than season-long shifts.
       </p>
     </div>
 
-    <h2>Step 10 &mdash; Interpreting the output</h2>
+    <h2>Step 10 &mdash; Read the output honestly</h2>
 
     <div class="nb-md">
       <p>
-        SaTScan returns a ranked list of clusters &mdash; each with a center, radius, date range,
+        SaTScan returns a ranked list of clusters — each with a center, radius, date range,
         observed-to-expected ratio, and p-value. A few things are worth understanding before
         drawing conclusions from those results.
       </p>
@@ -769,20 +797,20 @@ Total days:         366</div>
         the data and measures how often a cluster as extreme as the one found would appear by chance.
         That's a well-founded approach, but what it's testing is narrow: <em>no space-time
         interaction, given the observed margins</em>. A low p-value doesn't mean the cluster
-        represents an encampment hotspot &mdash; it means the pattern is unlikely under a specific null
+        represents an encampment hotspot — it means the pattern is unlikely under a specific null
         model applied to whatever data you fed in.
       </p>
       <p>
         <strong>Clusters of reports are not necessarily clusters of encampments.</strong> Reporting
-        behavior is shaped by many things beyond encampment presence &mdash; outreach campaigns, media
+        behavior is shaped by many things beyond encampment presence — outreach campaigns, media
         coverage, neighborhood organization, and whether residents feel that calling 311 leads to
         any response. Areas with lower reporting rates may have just as many encampments but less
-        familiarity with the service or less confidence that calling will help.
+        trust in the system, or fewer people who know the service exists.
       </p>
       <p>
         <strong>Some clusters reflect city activity, not underlying conditions.</strong> An
         enforcement sweep in a particular district in March will likely produce a cluster there in
-        March. That's a real pattern in the data &mdash; but it's a cluster of <em>city operations</em>.
+        March. That's a real pattern in the data — but it's a cluster of <em>city operations</em>.
         Cross-referencing results with the city's outreach calendar and local news for that period
         can help distinguish those cases from others.
       </p>
@@ -791,14 +819,14 @@ Total days:         366</div>
     <div class="nb-callout">
       <p>
         Space-time cluster analysis is exploratory. It's useful for generating hypotheses and
-        flagging areas that warrant closer attention &mdash; not for confirming that something definitively
+        flagging areas that warrant closer attention — not for confirming that something definitively
         happened. Treating the top-ranked cluster as a conclusion, rather than a starting point for
         further investigation, tends to overstate what the method can actually show.
       </p>
       <p>
         It's also worth keeping in mind that this dataset is about unhoused people. The same map
         could inform services and outreach, or it could be used to direct enforcement. That's not
-        a question the analysis answers &mdash; it's a decision about how the results get used.
+        a question the analysis answers — it's a decision about how the results get used.
       </p>
     </div>
 
@@ -806,14 +834,14 @@ Total days:         366</div>
 
     <div class="nb-md">
       <p>
-        Once you have baseline results, here are some directions worth exploring:
+        Once you have baseline results, here are worthwhile directions to push on:
       </p>
       <ul>
-        <li><strong>Test sensitivity to precision.</strong> Re-run at <code>COORD_PRECISION = 3</code> and <code>5</code>. Clusters that survive all three are more likely to be robust; those that don't are worth flagging.</li>
-        <li><strong>Reports vs. unique incidents.</strong> Collapse same-day duplicate reports at a location, re-run, and compare. If the top cluster depends on counting three calls about one tent as three cases, that's a finding about the pipeline, not about San Diego.</li>
+        <li><strong>Test sensitivity to precision.</strong> Re-run at <code>COORD_PRECISION = 3</code> and <code>5</code>. Clusters that survive all three are worth reporting; those that don't are worth flagging.</li>
+        <li><strong>Reports vs. unique incidents.</strong> Collapse same-day duplicate reports at a location, re-run, and compare. If the top cluster depends on counting three calls about one tent as three cases, that's a finding about your pipeline.</li>
         <li><strong>Seasonal splits.</strong> Divide the year into quarters and run each separately. Do clusters move, or do the same blocks recur each quarter?</li>
         <li><strong>Use the status column.</strong> The <code>status</code> field separates <code>Closed</code> from <code>Referred</code>. Do clusters of referred cases differ geographically from clusters of all cases?</li>
-        <li><strong>Add a denominator.</strong> If you can build a population-at-risk layer from Census tract data, the Poisson model becomes available &mdash; and asks a somewhat different question than permutation alone.</li>
+        <li><strong>Add a denominator.</strong> If you can build a population-at-risk layer from Census tract data, the Poisson model becomes available — and asks a sharper question than permutation alone.</li>
         <li><strong>Go multi-year.</strong> Pull 2023 and 2024, run a Prospective Space-Time analysis, and identify which clusters are still active at the end of the study period rather than which ones ever existed.</li>
       </ul>
     </div>
