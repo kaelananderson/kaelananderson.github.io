@@ -177,6 +177,20 @@
 
     .back-link:hover { color: var(--ink); }
 
+    /* ── Image placeholder ── */
+    .nb-img-placeholder {
+      width: 100%;
+      padding: 2.5rem 2rem;
+      background: #fafafa;
+      border: 1px dashed var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-style: italic;
+      margin: 0 0 0.75rem 0;
+      box-sizing: border-box;
+    }
+
     /* ── Step label ── */
     .step-label {
       display: inline-block;
@@ -352,6 +366,10 @@ ax.grid(alpha=0.25)
 plt.tight_layout()
 plt.show()</div>
 
+    <!-- Replace the placeholder below once you have the image.
+         <img src="../images/satscan-weekly-reports.png" alt="Weekly encampment reports, San Diego 2024" style="width:100%;display:block;border:1px solid var(--border);"> -->
+    <div class="nb-img-placeholder">Plot image — save the figure and replace this block with an &lt;img&gt; tag pointing to it.</div>
+
     <div class="nb-md">
       <p>
         Reports range from roughly 60 to 1,570 per week — a twenty-six-fold swing within a single year.
@@ -383,6 +401,10 @@ ax.set_xlabel("reports")
 ax.spines[["top", "right"]].set_visible(False)
 plt.tight_layout()
 plt.show()</div>
+
+    <!-- Replace the placeholder below once you have the image.
+         <img src="../images/satscan-community-areas.png" alt="Top community plan areas by encampment reports" style="width:100%;display:block;border:1px solid var(--border);"> -->
+    <div class="nb-img-placeholder">Plot image — save the figure and replace this block with an &lt;img&gt; tag pointing to it.</div>
 
     <div class="nb-md">
       <p>
@@ -571,6 +593,10 @@ plt.tight_layout()
 plt.show()
 
 print("most reports at one location:", geo["n"].max())</div>
+
+    <!-- Replace the placeholder below once you have the image.
+         <img src="../images/satscan-location-map.png" alt="Encampment reports by location, San Diego 2024" style="width:100%;display:block;border:1px solid var(--border);"> -->
+    <div class="nb-img-placeholder">Plot image — save the figure and replace this block with an &lt;img&gt; tag pointing to it.</div>
 
     <div class="nb-output">most reports at one location: 211</div>
 
